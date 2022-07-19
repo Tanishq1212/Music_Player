@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">AKHIYAAN</h2>
+            <h3 id="artist">Mitraz</h3>
+            <div class="image_container">
+                <img src="images/T1.jpg"alt="">
+            </div>
+            <audio src="Songs/Akhiyaan - Mitraz (1).mp3 " controls ></audio>
+            <div class="music_controls">
+                <i class="fas fa-solid fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-solid fa-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-solid fa-forward" id="next" title="Next"></i>
+            </div>
+
+ 
+        </div>
+    </div>
+</body>
+<script>
+    const music=document.querySelector("audio");
+    const img=document.querySelector("img");
+    const play=document.getElementById("play");
+    const artist=document.getElementById("artist");
+    const title=document.getElementById("title");
+    const prev=document.getElementById("prev");
+    const next=document.getElementById("next");
+
+    const songs=[
+        {
+            name:"Akhiyaan - Mitraz (1)",
+            title:"AKHIYAAN",
+            artist:"Mitraz",
+        },
+        {    
+            
+            name:"De Taali - Yo Yo Honey Singh",
+            title:"De Taali",
+            artist:"Yo Yo Honey Singh",
+        },
+        {
+            name:"Saanson Ko - Arijit Singh",
+            title:"Saanson Ko",
+            artist:"Arijit Singh",
+        }
+    ]
+
+    let isPlaying = false;
+    const playMusic=()=>{
+        isPlaying = true;
+        music.play();
+        play.classList.replace("fa-play","fa-pause");
+        img.classList.add("anime");
+    };
+    const pauseMusic=()=>{
+        isPlaying = false;
+        music.pause();
+      
+        play.classList.replace("fa-pause","fa-play");
+        img.classList.add("anime");
+    };
+    play.addEventListener('click',()=>{
+        if(isPlaying){
+            pauseMusic();
+        }
+        else{
+            playMusic();
+        }
+    });
+    //changing the music data
+    const loadSong=(songs)=>{
+        title.textContent=songs.title;
+        artist.textContent=songs.artist;
+        music.src="Songs/"+songs.name+".mp3";
+        img.src="Images/"+songs.name+".jpg";
+
+
+    }
+    //loadSong(songs[1]);
+
+    songIndex=0;
+    
+    const nextSong =()=>{
+        //songIndex++;
+        songIndex=(songIndex +1)%songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+    };
+    const prevSong =()=>{
+        //songIndex++;
+        songIndex=(songIndex -1+songs.length)%songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+    };
+    next.addEventListener('click',nextSong);
+    prev.addEventListener('click',prevSong);
+
+
+</script>
+</html>
